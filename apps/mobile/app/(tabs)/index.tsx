@@ -1,98 +1,80 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { CalendarCheck, Users, TrendingUp } from 'lucide-react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-
-export default function HomeScreen() {
+export default function Dashboard() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <ScrollView className="flex-1 bg-slate-50 p-4" contentContainerStyle={{ paddingBottom: 40 }}>
+      <View className="mt-4 mb-6">
+        <Text className="text-3xl font-bold text-slate-900">Dashboard</Text>
+        <Text className="text-slate-500 text-base">Visão geral do estúdio</Text>
+      </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {/* Grid de Métricas */}
+      <View className="flex-row flex-wrap justify-between">
+        <MetricCard
+          title="Agendamentos"
+          value="2.345"
+          icon={<CalendarCheck size={24} color="#2563eb" />}
+          trend="+4.7%"
+        />
+        <MetricCard
+          title="Professores"
+          value="48"
+          icon={<Users size={24} color="#7c3aed" />}
+          trend="+2.1%"
+        />
+        <MetricCard
+          title="Estúdios"
+          value="12"
+          icon={<TrendingUp size={24} color="#059669" />}
+          trend="+12%"
+        />
+        {/* Card extra só para fechar o grid visualmente */}
+        <View className="w-[48%]" />
+      </View>
+
+      <View className="mt-8 mb-4">
+        <Text className="text-xl font-bold text-slate-900">Próximas Aulas</Text>
+      </View>
+
+      {/* Placeholder de lista de aulas */}
+      <View className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-3">
+        <View className="flex-row justify-between items-center mb-2">
+          <Text className="font-bold text-lg text-slate-900">08:00</Text>
+          <View className="bg-blue-100 px-2 py-1 rounded-md">
+            <Text className="text-blue-700 text-xs font-bold">Pilates Solo</Text>
+          </View>
+        </View>
+        <Text className="text-slate-500">Sala A • Prof. Matheus</Text>
+      </View>
+
+      <View className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm mb-3">
+        <View className="flex-row justify-between items-center mb-2">
+          <Text className="font-bold text-lg text-slate-900">09:00</Text>
+          <View className="bg-purple-100 px-2 py-1 rounded-md">
+            <Text className="text-purple-700 text-xs font-bold">Reformer</Text>
+          </View>
+        </View>
+        <Text className="text-slate-500">Sala B • Prof. Ana</Text>
+      </View>
+
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+// Componente Auxiliar (só existe dentro desse arquivo)
+function MetricCard({ title, value, icon, trend }: any) {
+  return (
+    <View className="bg-white w-[48%] p-4 rounded-2xl shadow-sm mb-4 border border-slate-100">
+      <View className="bg-slate-100 self-start p-3 rounded-xl mb-3">
+        {icon}
+      </View>
+      <Text className="text-slate-500 text-sm font-medium mb-1">{title}</Text>
+      <Text className="text-2xl font-bold text-slate-900">{value}</Text>
+      <Text className="text-green-600 text-xs font-bold mt-1">
+        {trend} <Text className="text-slate-400 font-normal">vs mês anterior</Text>
+      </Text>
+    </View>
+  );
+}
