@@ -10,6 +10,7 @@
         "db:push": "turbo run db:push"
     },
     "devDependencies": {
+        "babel-plugin-module-resolver": "^5.0.2",
         "prettier": "^3.0.0",
         "turbo": "latest"
     },
