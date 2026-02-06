@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler", // Melhor para Next.js 14+ e Turbo
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "allowJs": true,
+        "baseUrl": ".",
+        "paths": {
+            "@prisma/client": [
+                "../../node_modules/@prisma/client"
+            ]
+        }
+    },
+    "include": [
+        "**/*.ts",
+        "index.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
